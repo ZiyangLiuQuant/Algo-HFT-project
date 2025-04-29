@@ -60,43 +60,107 @@ Key dependencies are listed in `requirements.txt`:
 - matplotlib
 - scikit-learn
 
-## Workflow
+## Reproduction Guide
 
-1. **Data Preparation**
+### 1. Environment Setup
+
+1. **Clone the repository**:
+   ```bash
+   git clone https://github.com/ZiyangLiuQuant/Algo-HFT-project.git
+   cd Algo-HFT-project
+   ```
+
+2. **Create and activate a virtual environment**:
+   ```bash
+   # For Mac/Linux
+   python -m venv venv
+   source venv/bin/activate
+
+   # For Windows
+   python -m venv venv
+   venv\Scripts\activate
+   ```
+
+3. **Install dependencies**:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+### 2. Data Preparation
+
+1. **Download training data**:
+   - The training data files are available in the `data/` directory:
+     - `AMZN_train_data.csv`
+     - `GOOG_train_data.csv`
+     - `INTC_train_data.csv`
+     - `MSFT_train_data.csv`
+     - `AAPL_train_data.csv`
+
+2. **Create necessary directories**:
+   ```bash
+   mkdir -p processed_data models results strategy_results figure logs
+   ```
+
+### 3. Running the Pipeline
+
+1. **Data Preprocessing**:
    ```bash
    python data_preprocessor.py
    ```
+   This will process the raw data and create processed files in the `processed_data/` directory.
 
-2. **Feature Generation**
+2. **Feature Generation and Model Training**:
    ```bash
    python main.py
    ```
+   This will:
+   - Generate features
+   - Train models for each symbol
+   - Save models and scores
 
-3. **Strategy Testing**
+3. **Strategy Testing**:
    ```bash
    python test_strategy.py
    ```
+   This will test the trading strategy and generate results.
 
-4. **Model Evaluation**
+4. **Model Evaluation**:
    ```bash
    python model_evaluation.py
    ```
+   This will evaluate model performance and generate analysis reports.
 
-## Key Features
+### 4. Expected Outputs
 
-- **Dynamic Thresholds**: Strategy adjusts execution thresholds based on market conditions
-- **Market State Analysis**: Considers multiple market states for execution decisions
-- **Performance Tracking**: Comprehensive transaction cost analysis (TCA)
-- **Machine Learning Integration**: Uses LightGBM for signal generation
-- **Multi-Symbol Support**: Currently supports AMZN, GOOG, MSFT, and INTC
+After running the pipeline, you should see:
 
-## Output Analysis
+1. **Processed Data**:
+   - `processed_data/{symbol}_processed.feather` files
 
-The project generates several types of analysis:
-1. Score distributions for different targets
-2. Execution quality metrics
-3. Factor performance analysis
-4. Strategy performance reports
+2. **Models**:
+   - `models/{symbol}_{target}_model.joblib` files
+
+3. **Results**:
+   - `results/{symbol}_{target}_scores.csv` files
+   - `strategy_results/` directory with execution records
+
+4. **Analysis**:
+   - `figure/` directory with various plots
+   - Analysis reports in the root directory
+
+### 5. Troubleshooting
+
+1. **Memory Issues**:
+   - If you encounter memory errors, try processing one symbol at a time
+   - Modify `main.py` to process specific symbols
+
+2. **Dependency Issues**:
+   - Make sure all dependencies are correctly installed
+   - Check Python version (recommended: Python 3.8+)
+
+3. **Data Format Issues**:
+   - Ensure data files are in the correct format
+   - Check column names match the expected format
 
 ## Notes
 
